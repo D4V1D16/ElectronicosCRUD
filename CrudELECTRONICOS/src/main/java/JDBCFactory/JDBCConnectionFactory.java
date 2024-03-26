@@ -15,12 +15,12 @@ import java.util.logging.Logger;
  * @author Usuario
  */
 public class JDBCConnectionFactory {
-    private static final String DB_NAME = "electronicos";
-    private static final String USERNAME = "root";
-    private static final String PASSWORD = "";
-    private static final String HOST = "localhost";
-    private static final String PORT = "3306";
-    private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
+    private static final String DB_NAME = "DATABASE";
+    private static final String USERNAME = "USERNAME";
+    private static final String PASSWORD = "PASSWORD";
+    private static final String HOST = "HOST";
+    private static final String PORT = "PORT";
+    private static final String DRIVER = "DRIVER";
 
     public static Connection getConnection() {
         Connection connection = null;
