@@ -16,10 +16,10 @@ import java.util.logging.Logger;
  */
 public class JDBCConnectionFactory {
     private static final String DB_NAME = "electronicos";
-    private static final String USERNAME = "USER_NAME";
-    private static final String PASSWORD = "PASSWORD";
-    private static final String HOST = "HOST";
-    private static final String PORT = "PORT";
+    private static final String USERNAME = "root";
+    private static final String PASSWORD = "";
+    private static final String HOST = "localhost";
+    private static final String PORT = "3306";
     private static final String DRIVER = "com.mysql.cj.jdbc.Driver";
 
     public static Connection getConnection() {

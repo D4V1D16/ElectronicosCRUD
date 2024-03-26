@@ -1,9 +1,11 @@
 com\electronicos\Forms\CategoriaFORM.class
 com\electronicos\models\Producto.class
 com\electronicos\Forms\ActualizarCategoria.class
+com\electronicos\Forms\MarcaFORM$2.class
 dao\ProductoDao.class
 com\electronicos\Forms\MainForm.class
 com\electronicos\Forms\ProductoFORM$3.class
+dao\MarcaDao.class
 com\electronicos\Forms\cambioAgregar$1.class
 com\electronicos\models\Categoria.class
 com\electronicos\Forms\CategoriaFORM$2.class
@@ -15,11 +17,14 @@ com\electronicos\Forms\ActualizarCategoria$1.class
 com\electronicos\Forms\ProductoFORM$4.class
 com\electronicos\Forms\MainForm$3.class
 com\electronicos\Forms\CategoriaFORM$1.class
+com\electronicos\Forms\MarcaFORM$1.class
 com\electronicos\Forms\ProductoFORM.class
+com\electronicos\models\Marca.class
 JDBCFactory\JDBCConnectionFactory.class
 com\electronicos\Forms\MarcaFORM.class
 com\electronicos\crudelectronicos\CrudELECTRONICOS.class
 com\electronicos\Forms\cambioAgregar$2.class
+com\electronicos\Forms\MarcaFORM$3.class
 com\electronicos\Forms\cambioAgregar.class
 com\electronicos\Forms\ProductoFORM$1.class
 com\electronicos\Forms\CategoriaFORM$3.class

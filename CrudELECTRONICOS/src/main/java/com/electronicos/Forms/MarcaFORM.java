@@ -4,11 +4,20 @@
  */
 package com.electronicos.Forms;
 
+import com.electronicos.models.Marca;
+import dao.MarcaDao;
+
+import javax.swing.table.DefaultTableModel;
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  *
  * @author Usuario
  */
 public class MarcaFORM extends javax.swing.JPanel {
+    List<Marca> listaMarcas = new ArrayList<Marca>();
+    MarcaDao dao = new MarcaDao();
 
     /**
      * Creates new form MarcaFORM
@@ -26,19 +35,146 @@ public class MarcaFORM extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        lblTitul = new javax.swing.JLabel();
+        btnAgregar = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblMarca = new javax.swing.JTable();
+        btnActualizar = new javax.swing.JButton();
+        btnEliminar1 = new javax.swing.JButton();
+        txtFieldNombre = new javax.swing.JTextField();
+
+        lblTitul.setText("Bienvenido al FORM de marca");
+
+        btnAgregar.setText("Agregar Marca");
+        btnAgregar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAgregarActionPerformed(evt);
+            }
+        });
+
+        tblMarca.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null},
+                {null, null},
+                {null, null},
+                {null, null}
+            },
+            new String [] {
+                "IdMarca", "Nombre Marca"
+            }
+        ));
+        jScrollPane1.setViewportView(tblMarca);
+
+        btnActualizar.setText("Editar ");
+        btnActualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActualizarActionPerformed(evt);
+            }
+        });
+
+        btnEliminar1.setText("Eliminar Marca");
+        btnEliminar1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminar1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnEliminar1)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 358, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(51, 51, 51)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(txtFieldNombre)
+                    .addComponent(btnActualizar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(btnAgregar, javax.swing.GroupLayout.DEFAULT_SIZE, 120, Short.MAX_VALUE))
+                .addContainerGap(72, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addGap(221, 221, 221)
+                .addComponent(lblTitul)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(136, 136, 136)
+                        .addComponent(txtFieldNombre, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnAgregar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnActualizar))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(lblTitul)
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 325, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35)
+                        .addComponent(btnEliminar1)))
+                .addContainerGap(58, Short.MAX_VALUE))
         );
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
+        try{
+            int indice = this.tblMarca.getSelectedRow();
+            listaMarcas = dao.mostrarDatos();
+            Marca marca = listaMarcas.get(indice);
+            String nombre = this.txtFieldNombre.getText();
+            marca.setNombre(nombre);
+            dao.actualizarMarca(marca);
+
+            mostrarDatos();
+       }catch(Exception e){
+           
+       } finally{
+           mostrarDatos();
+       }
+    }//GEN-LAST:event_btnActualizarActionPerformed
+
+    private void btnAgregarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAgregarActionPerformed
+        String nombre = this.txtFieldNombre.getText();
+        Marca marca = new Marca(nombre);
+        dao.agregarMarca(marca);
+        mostrarDatos();
+    }//GEN-LAST:event_btnAgregarActionPerformed
+
+    private void btnEliminar1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminar1ActionPerformed
+        int indice = this.tblMarca.getSelectedRow();
+        listaMarcas = dao.mostrarDatos();
+        Marca marca = listaMarcas.get(indice);
+        dao.eliminarMarca(marca);
+        mostrarDatos();
+    }
+
+
+    private void mostrarDatos(){
+            List<Marca> lista = new ArrayList<>();
+            lista = dao.mostrarDatos();
+            DefaultTableModel modelo = (DefaultTableModel) tblMarca.getModel();
+            modelo.setRowCount(0);
+            for(Marca categoria: lista){
+                Object[] fila = {
+                        categoria.getId(),
+                        categoria.getNombre(),
+                };
+                modelo.addRow(fila);
+            }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnActualizar;
+    private javax.swing.JButton btnAgregar;
+    private javax.swing.JButton btnEliminar1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblTitul;
+    private javax.swing.JTable tblMarca;
+    private javax.swing.JTextField txtFieldNombre;
     // End of variables declaration//GEN-END:variables
 }

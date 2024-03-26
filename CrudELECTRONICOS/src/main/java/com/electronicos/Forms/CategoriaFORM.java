@@ -183,10 +183,10 @@ public class CategoriaFORM extends javax.swing.JPanel {
     private void btnEliminarCategoriaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarCategoriaActionPerformed
        try{
         int indice = this.tblCategorias.getSelectedRow();
-       listaCategorias = dao.mostrarDatos();
-       Categoria categoria = listaCategorias.get(indice);
-       dao.eliminarCategoria(categoria);
-       mostrarDatos();  
+        listaCategorias = dao.mostrarDatos();
+        Categoria categoria = listaCategorias.get(indice);
+        dao.eliminarCategoria(categoria);
+        mostrarDatos();  
        }catch(Exception e){
             this.lblWarningMessage.setText("Haga click sobre la fila que desea eliminar");
        } finally{

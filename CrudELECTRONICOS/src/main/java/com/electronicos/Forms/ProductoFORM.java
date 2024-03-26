@@ -19,7 +19,9 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 public class ProductoFORM extends javax.swing.JPanel {
-
+    List <Producto> lista = new ArrayList<Producto>();
+    
+    
     /**
      * Creates new form ProductoFORM
      *
@@ -46,6 +48,7 @@ public class ProductoFORM extends javax.swing.JPanel {
         txtFldIdEliminar = new javax.swing.JTextField();
         btnActualizar = new javax.swing.JButton();
         txtFieldActualizar = new javax.swing.JTextField();
+        lblWarning = new javax.swing.JLabel();
 
         jLabel1.setText("Lista Productos");
 
@@ -102,18 +105,24 @@ public class ProductoFORM extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1)
-                        .addGap(30, 30, 30))))
+                        .addGap(30, 30, 30))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
             .addGroup(layout.createSequentialGroup()
-                .addComponent(btnAgregarProducto)
-                .addGap(222, 222, 222)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(179, 179, 179)
+                        .addComponent(lblWarning))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btnAgregarProducto)))
+                .addGap(86, 86, 86)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(btnEliminar)
                     .addComponent(txtFldIdEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGap(87, 87, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(txtFieldActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, 125, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnActualizar))
@@ -122,54 +131,64 @@ public class ProductoFORM extends javax.swing.JPanel {
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 419, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(15, 15, 15)
+                .addGap(43, 43, 43)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtFldIdEliminar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnAgregarProducto)
                     .addComponent(txtFieldActualizar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnEliminar)
-                    .addComponent(btnActualizar))
-                .addContainerGap(48, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btnEliminar)
+                            .addComponent(btnActualizar)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(4, 4, 4)
+                        .addComponent(lblWarning))))
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
-        int indice = Integer.valueOf(this.txtFldIdEliminar.getText());
-        dao.eliminarProducto(indice);
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {                                            
+        int indice = this.tablaProductos.getSelectedRow();
+        lista = dao.mostrarDatos();
+        Producto producto = lista.get(indice);
+        dao.eliminarProducto(producto);
         cargarDatos();
-    }//GEN-LAST:event_btnEliminarActionPerformed
+    }
 
-    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActualizarActionPerformed
-        int id = Integer.valueOf(this.txtFieldActualizar.getText());
-        JFrame frame = new JFrame("Actualizar un Producto");
+    private void btnActualizarActionPerformed(java.awt.event.ActionEvent evt) {
+        try{
+            int indice = this.tablaProductos.getSelectedRow();
+            lista = dao.mostrarDatos();
+            Producto producto = lista.get(indice);
+            JFrame frame = new JFrame("Actualizar un Producto");
+            cambioAgregar panelAgregar = new cambioAgregar(2,producto.getId());
+            frame.setSize(800, 500);
+            frame.add(panelAgregar);
+            frame.setVisible(true);
+        } catch(Exception e){
+            this.lblWarning.setText("Error ingrese o seleccion una columna a actualizar");
+        }finally {
+            cargarDatos();
+        }
 
-        cambioAgregar panelAgregar = new cambioAgregar(2,id);
-        frame.setSize(800, 500);
-        frame.add(panelAgregar);
-        frame.setVisible(true);
-    }//GEN-LAST:event_btnActualizarActionPerformed
+    }
 
     private void btnAgregarProductoActionPerformed(java.awt.event.ActionEvent evt) {                                                   
         JFrame frame = new JFrame("Agregar un Producto");
-        //Opcion 1 para Agregar
         cambioAgregar panelAgregar = new cambioAgregar(1);
         frame.add(panelAgregar);
 
         frame.setSize(800, 500);
 
         frame.setVisible(true);
-        
-        
     }
 
     private void cargarDatos() {
-        List <Producto> lista = new ArrayList<Producto>();
         lista= dao.mostrarDatos();
         DefaultTableModel modelo = (DefaultTableModel) tablaProductos.getModel();
         modelo.setRowCount(0);
@@ -195,6 +214,7 @@ public class ProductoFORM extends javax.swing.JPanel {
     private javax.swing.JButton btnEliminar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lblWarning;
     private javax.swing.JTable tablaProductos;
     private javax.swing.JTextField txtFieldActualizar;
     private javax.swing.JTextField txtFldIdEliminar;

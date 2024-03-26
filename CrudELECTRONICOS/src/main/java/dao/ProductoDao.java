@@ -82,13 +82,13 @@ public class ProductoDao {
         return listaProducto;
     }
     
-    public void eliminarProducto(int id){
+    public void eliminarProducto(Producto producto){
         conexion = null;
         try{
             conexion = JDBCConnectionFactory.getConnection();
             String sql = "DELETE FROM `productos` WHERE `productos`.`idProducto` = ?" ;
             PreparedStatement statement = conexion.prepareStatement(sql);
-            statement.setInt(1,id);
+            statement.setInt(1,producto.getId());
             statement.execute();
             JOptionPane.showMessageDialog(null, "El producto se ha eliminado correctamente.", "Éxito", JOptionPane.INFORMATION_MESSAGE);
         } catch (Exception e){
